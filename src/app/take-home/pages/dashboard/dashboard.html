@@ -1,0 +1,7 @@
+
+@if(!user()){
+    <h1>No se han podido cargar datos del usuario </h1>
+}
+@else {
+    <h1>{{this.user()?.name}}</h1>
+}

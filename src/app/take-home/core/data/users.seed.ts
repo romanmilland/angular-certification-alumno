@@ -1,4 +1,4 @@
-import { User } from './user.model';
+import { User } from '../../users/user.model';
 
 export const INITIAL_USERS: readonly User[] = [
   { id: 1, name: 'Rafa Núñez', email: 'rafa.nunez@example.com', role: 'Admin' },
