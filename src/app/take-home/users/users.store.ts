@@ -1,9 +1,12 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { INITIAL_USERS } from './users.seed';
+import { INITIAL_USERS } from '../core/data/users.seed';
 import { User, UserDraft } from './user.model';
 
 @Injectable({ providedIn: 'root' })
 export class UsersStore {
+
+  // TODO: BORRAR esta clase - ya implementada en su lugar
+
   private readonly usersState = signal<User[]>([...INITIAL_USERS]);
 
   readonly users = this.usersState.asReadonly();

@@ -32,6 +32,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'proyecto',
+    title: 'Proyecto prueba',
+    loadChildren: () =>
+      import('./take-home/routes.routes').then(
+        (module) => module.routes,
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'inicio',
   },
