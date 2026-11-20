@@ -22,6 +22,8 @@ export class AuthService {
             return throwError(() => new Error('User not found'));
         };
 
+        localStorage.setItem('isLogged', user.id.toString());
+        
         return of({id: user.id});
     }
 

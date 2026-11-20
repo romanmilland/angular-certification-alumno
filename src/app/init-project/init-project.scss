@@ -1,0 +1,32 @@
+:host {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.app-main {
+  width: min(1180px, calc(100% - 32px));
+  margin-inline: auto;
+  padding-block: 32px 56px;
+}
+
+@media (max-width: 1024px) {
+  .app-main {
+    width: min(100% - 28px, 1180px);
+    padding-bottom: 44px;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-main {
+    width: min(100% - 20px, 1180px);
+    padding-bottom: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main {
+    width: min(100% - 16px, 1180px);
+    padding-bottom: 28px;
+  }
+}
