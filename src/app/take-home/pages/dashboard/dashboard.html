@@ -4,4 +4,11 @@
 }
 @else {
     <h1>{{this.user()?.name}}</h1>
+    <a routerLink="/project/list" class="button show-user-button">Mostrar usuarios</a>
+    @if (user()?.role === 'Admin') {
+        <a routerLink="/project/auth/register" class="button">Añadir usuario</a>
+    }
+    <!-- @if (user()?.role !== 'Viewer') {
+        <a routerLink="/proyecto/auth/login" class="button">Actualizar usuario</a>
+    } -->
 }

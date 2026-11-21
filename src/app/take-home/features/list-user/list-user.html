@@ -1,1 +1,40 @@
-<p>list-user works!</p>
+@if(!userList()){
+    <p>No se ha encotrado ningún usuario</p>
+}
+@else {
+
+    <h1>Lista de usuarios</h1>
+    <!-- TODO: añadir un buscador de usuarios-->
+    <table>
+        <tr>
+            <th>nombre</th>
+            <th>correo</th>
+            @if (this.userRole() !== 'Viewer') {
+            <th>Editar</th>
+            }
+            @if (this.userRole() === 'Admin') {
+            <th>Eliminar</th>
+            }
+        </tr>
+        @for (user of userList(); track user.id) {
+        <tr>
+            <td>
+                {{user.name}}
+            </td>
+            <td>
+                {{user.email}}
+            </td>
+             @if (this.userRole() !== 'Viewer') {
+            <td>
+                <a [routerLink]="['/project/auth/register', user.id]" class="button button-edit">Editar</a>
+            </td>
+            }
+            @if (this.userRole() === 'Admin') {
+            <td>
+                <button (click)="deleteUser(user.id)" class="button button-delete">Eliminar</button>
+            </td>
+            }
+        </tr>
+        }
+    </table>
+}

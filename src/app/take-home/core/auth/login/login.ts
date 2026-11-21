@@ -35,12 +35,10 @@ export class Login {
 
    this.authService.login(credencials).subscribe({
     next: user => {
-      localStorage.setItem('isLogged', user.id.toString());
-      this.router.navigate(['./proyecto/dashboard', user.id]);
+      this.router.navigate(['./project/dashboard']);
     },
     error: err => {
       this.notUser.set(true);
-      console.log(err);
     }
    });
     
