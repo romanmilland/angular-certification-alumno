@@ -1,7 +1,57 @@
-.button-edit{
-    background: var(--warning);
+.list-user-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.button-delete{
-    background: var(--danger);
+.table-card {
+  overflow-x: auto;
+  padding: 0;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+  padding: 14px 18px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.user-table th {
+  color: var(--muted-strong);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--surface-subtle);
+}
+
+.user-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.user-table tbody tr:hover {
+  background: var(--surface-subtle);
+}
+
+.button-edit {
+  color: var(--surface);
+  background: var(--warning);
+}
+
+.button-edit:hover {
+  background: var(--warning);
+}
+
+.button-delete {
+  color: var(--surface);
+  background: var(--danger);
+}
+
+.button-delete:hover {
+  background: var(--danger);
 }

@@ -1,9 +1,16 @@
+<header>
+  <div class="header-container">
+    <a routerLink="/project/home" class="brand">Proyecto Certificación Angular</a>
 
-  <header>
-    <div class="header-container">
-    <div>Proyecto Certificado Angular </div>
-      <nav>
-        <button>Iniciar Sesión</button>
-      </nav>
-    </div>
-  </header>
+    <nav class="header-nav">
+      @if (user()) {
+        <span class="header-user">{{ user()?.name }}</span>
+        <button type="button" class="button button--secondary button--small" (click)="onLogout()">
+          Cerrar sesión
+        </button>
+      } @else {
+        <a routerLink="/project/auth/login" class="button button--small">Iniciar Sesión</a>
+      }
+    </nav>
+  </div>
+</header>

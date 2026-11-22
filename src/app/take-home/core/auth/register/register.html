@@ -1,52 +1,59 @@
+<section class="page register-page">
+  <header class="page-header">
+    @if (id() !== -1) {
+      <span class="eyebrow">Editar usuario</span>
+      <h1>Actualizar usuario</h1>
+    } @else {
+      <span class="eyebrow">Nuevo usuario</span>
+      <h1>Registro</h1>
+    }
+    <p class="lead">Agrege los datos del nuevo usuario.</p>
+  </header>
 
-@if (id()!== -1) {
-    <h1>Actualizar</h1>
-}@else {
-<h1>Registro</h1>
-}
-hoal: {{userRole()}}
-<form (submit)="onSubmit($event)">
-    <label>
-        Nombre:
-        <input type="text" [formField]="registerForm.name" />
+  <form (submit)="onSubmit($event)" class="card register-form">
+    <label class="form-field">
+      <span class="form-label">Nombre</span>
+      <input type="text" [formField]="registerForm.name" />
     </label>
 
-    @if(registerForm.name().touched() && registerForm.email().invalid()){
-        @for(error of registerForm.name().errors(); track error){
-            <p>{{error.message}}</p>
-        }
+    @if (registerForm.name().touched() && registerForm.name().invalid()) {
+      @for (error of registerForm.name().errors(); track error) {
+        <p class="form-error">{{ error.message }}</p>
+      }
     }
 
-    <label>
-        Correo:
-        <input type="email" [formField]="registerForm.email" />
+    <label class="form-field">
+      <span class="form-label">Correo</span>
+      <input type="email" [formField]="registerForm.email" />
     </label>
 
-    @if(registerForm.name().touched() && registerForm.email().invalid()){
-        @for(error of registerForm.name().errors(); track error){
-            <p>{{error.message}}</p>
-        }
+    @if (registerForm.email().touched() && registerForm.email().invalid()) {
+      @for (error of registerForm.email().errors(); track error) {
+        <p class="form-error">{{ error.message }}</p>
+      }
     }
 
     @if (userRole() === 'Admin') {
-    <label>
-        asignación:
+      <label class="form-field">
+        <span class="form-label">Asignación</span>
         <select [formField]="registerForm.role">
-            <option value="Viewer">Espectador</option>
-            <option value="Editor">Editor</option>
-            <option value="Admin">Administrador</option>
+          <option value="Viewer">Espectador</option>
+          <option value="Editor">Editor</option>
+          <option value="Admin">Administrador</option>
         </select>
-    </label>
-    }
-    @if (id()!== -1) {
-        <button type="submit">Actualizar</button>
-    }@else {
-
-        <button type="submit">Añadir</button>
+      </label>
     }
 
-    @if(notUser()){
-        <p>Usuario no encontrado</p>
-    }
+    <div class="button-row">
+      @if (id() !== -1) {
+        <button type="submit" class="button">Actualizar</button>
+      } @else {
+        <button type="submit" class="button">Añadir</button>
+      }
+    </div>
 
-</form>
+    @if (notUser()) {
+      <p class="notice notice--warning">Usuario no encontrado</p>
+    }
+  </form>
+</section>
