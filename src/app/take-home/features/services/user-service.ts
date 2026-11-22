@@ -15,6 +15,10 @@ export class UserService {
     readonly user = this._user.asReadonly();
     readonly role = computed(() => this._user()?.role ?? null);
 
+    refreshCurrentUser(): void {
+        this._user.set(this.loadUserStorage());
+    }
+
     getUser(idUser: number): Observable<User> {
         const user = this.usersState().find(
             user => user.id === idUser

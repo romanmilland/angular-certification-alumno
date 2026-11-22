@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { form, FormField, required } from '@angular/forms/signals';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../features/services/auth-service';
+import { UserService } from '../../../features/services/user-service';
 import { User } from '../../../users/user.model';
 
 @Component({
@@ -13,6 +14,7 @@ import { User } from '../../../users/user.model';
 export class Login {
 
   private readonly authService = inject(AuthService);
+  private readonly userService = inject(UserService);
   private readonly router = inject(Router)
 
   private notUser = signal<boolean>(false)
@@ -35,6 +37,7 @@ export class Login {
 
    this.authService.login(credencials).subscribe({
     next: user => {
+      this.userService.refreshCurrentUser();
       this.router.navigate(['./project/dashboard']);
     },
     error: err => {

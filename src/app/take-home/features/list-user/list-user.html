@@ -1,40 +1,49 @@
-@if(!userList()){
-    <p>No se ha encotrado ningún usuario</p>
-}
-@else {
+<section class="page list-user-page">
+  @if (!userList()) {
+    <div class="page-header">
+      <h1>No se ha encontrado ningún usuario</h1>
+    </div>
+  } @else {
+    <header class="page-header">
+      <span class="eyebrow">Gestión de usuarios</span>
+      <h1>Lista de usuarios</h1>
+      <p class="lead">Gestión de usuarios registrados.</p>
+    </header>
 
-    <h1>Lista de usuarios</h1>
     <!-- TODO: añadir un buscador de usuarios-->
-    <table>
-        <tr>
-            <th>nombre</th>
-            <th>correo</th>
+    <div class="card table-card">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
             @if (this.userRole() !== 'Viewer') {
-            <th>Editar</th>
+              <th>Editar</th>
             }
             @if (this.userRole() === 'Admin') {
-            <th>Eliminar</th>
+              <th>Eliminar</th>
             }
-        </tr>
-        @for (user of userList(); track user.id) {
-        <tr>
-            <td>
-                {{user.name}}
-            </td>
-            <td>
-                {{user.email}}
-            </td>
-             @if (this.userRole() !== 'Viewer') {
-            <td>
-                <a [routerLink]="['/project/auth/register', user.id]" class="button button-edit">Editar</a>
-            </td>
-            }
-            @if (this.userRole() === 'Admin') {
-            <td>
-                <button (click)="deleteUser(user.id)" class="button button-delete">Eliminar</button>
-            </td>
-            }
-        </tr>
-        }
-    </table>
-}
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of userList(); track user.id) {
+            <tr>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              @if (this.userRole() !== 'Viewer') {
+                <td>
+                  <a [routerLink]="['/project/auth/register', user.id]" class="button button--small button-edit">Editar</a>
+                </td>
+              }
+              @if (this.userRole() === 'Admin') {
+                <td>
+                  <button (click)="deleteUser(user.id)" class="button button--small button-delete">Eliminar</button>
+                </td>
+              }
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>
