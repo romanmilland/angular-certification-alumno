@@ -55,3 +55,65 @@
 .button-delete:hover {
   background: var(--danger);
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 40%);
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  width: min(480px, calc(100vw - 32px));
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: 0 24px 60px rgb(34 42 62 / 18%);
+}
+
+.modal__title {
+  margin-bottom: 10px;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.modal__body {
+  color: var(--muted-strong);
+  margin-bottom: 28px;
+}
+
+.modal__actions {
+  justify-content: flex-end;
+}
+
+.toast {
+  position: fixed;
+  bottom: 40%;
+  right: 40%;
+  z-index: 1001;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgb(0 0 0 / 12%);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.toast--success {
+  color: var(--success);
+  background: var(--success-soft);
+}
+
+.toast--error {
+  color: var(--danger);
+  background: var(--danger-soft);
+}
+
+.toast__message {
+  flex: 1;
+}

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { form, FormField, required } from '@angular/forms/signals';
+import { email, form, FormField, minLength, required } from '@angular/forms/signals';
 import { ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { UserService } from '../../../features/services/user-service';
@@ -36,9 +36,11 @@ export class Register implements OnInit{
   });
 
   registerForm = form(this.registerModel, (schemaPath)=>{
-    required(schemaPath.name, {message: 'Nombre requerido'});
-    required(schemaPath.email, {message: 'Correo requerido'});
-    required(schemaPath.role, {message: 'Correo requerido'});
+    required(schemaPath.name, {message: 'El nombre es obligatorio'});
+    minLength(schemaPath.name, 3, {message: 'El nombre debe tener al menos 3 caracteres'});
+    required(schemaPath.email, {message: 'El correo es obligatorio'});
+    email(schemaPath.email, {message: 'El correo debe tener un formato válido'});
+    required(schemaPath.role, {message: 'El rol es obligatorio'});
   });
 
   protected readonly userRole = this.userService.role;

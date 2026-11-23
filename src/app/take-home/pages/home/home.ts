@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   imports: [RouterLink],
@@ -7,5 +7,12 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.scss',
   templateUrl: './home.html',
 })
-export class Home {
+export class Home implements OnInit {
+  private readonly router = inject(Router);
+
+  ngOnInit(): void {
+    if (localStorage.getItem('isLogged')) {
+      this.router.navigate(['/project/dashboard']);
+    }
+  }
 }
