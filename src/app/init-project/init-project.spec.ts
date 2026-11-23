@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { InitProject } from './init-project';
-
 
 describe('InitProject', () => {
   let component: InitProject;
@@ -9,9 +9,9 @@ describe('InitProject', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InitProject]
-    })
-      .compileComponents();
+      imports: [InitProject],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InitProject);
     component = fixture.componentInstance;

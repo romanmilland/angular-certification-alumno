@@ -10,7 +10,6 @@
       <p class="lead">Gestión de usuarios registrados.</p>
     </header>
 
-    <!-- TODO: añadir un buscador de usuarios-->
     <div class="card table-card">
       <table class="user-table">
         <thead>
@@ -37,7 +36,7 @@
               }
               @if (this.userRole() === 'Admin') {
                 <td>
-                  <button (click)="deleteUser(user.id)" class="button button--small button-delete">Eliminar</button>
+                  <button (click)="openDeleteModal(user.id)" class="button button--small button--danger">Eliminar</button>
                 </td>
               }
             </tr>
@@ -47,3 +46,22 @@
     </div>
   }
 </section>
+
+@if (toast()) {
+  <div class="toast toast--{{ toast()!.type }}" role="alert">
+    <span class="toast__message">{{ toast()!.message }}</span>
+  </div>
+}
+
+@if (showDeleteModal()) {
+  <div class="modal-overlay" (click)="cancelDelete()">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" (click)="$event.stopPropagation()">
+      <h2 id="modal-title" class="modal__title">Eliminar usuario</h2>
+      <p class="modal__body">¿Estás seguro de que quieres eliminar este usuario?</p>
+      <div class="modal__actions button-row">
+        <button class="button button--secondary" (click)="cancelDelete()">Cancelar</button>
+        <button class="button button--danger" (click)="confirmDelete()">Sí, eliminar</button>
+      </div>
+    </div>
+  </div>
+}

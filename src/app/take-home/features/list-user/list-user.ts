@@ -3,18 +3,27 @@ import { RouterLink } from '@angular/router';
 import { User, UserRole } from '../../users/user.model';
 import { UserService } from '../services/user-service';
 
+interface Toast {
+  message: string;
+  type: 'success' | 'error';
+}
+
 @Component({
   imports: [RouterLink],
   selector: 'app-list-user',
   styleUrl: './list-user.scss',
   templateUrl: './list-user.html',
 })
-export class ListUser implements OnInit{
+export class ListUser implements OnInit {
 
   private readonly userService = inject(UserService);
-  
-  private userRole = signal<UserRole>('Viewer');
-  private userList = signal<User[]>([]);
+  private toastTimer: ReturnType<typeof setTimeout> | null = null;
+
+  protected userRole = signal<UserRole>('Viewer');
+  protected userList = signal<User[]>([]);
+  protected showDeleteModal = signal(false);
+  protected userToDeleteId = signal<number | null>(null);
+  protected toast = signal<Toast | null>(null);
 
   ngOnInit(): void {
 
@@ -24,19 +33,41 @@ export class ListUser implements OnInit{
     this.getUsers()
   }
 
-  deleteUser(id: number){
+  openDeleteModal(id: number): void {
+    this.userToDeleteId.set(id);
+    this.showDeleteModal.set(true);
+  }
+
+  cancelDelete(): void {
+    this.showDeleteModal.set(false);
+    this.userToDeleteId.set(null);
+  }
+
+  confirmDelete(): void {
+    const id = this.userToDeleteId();
+    if (id === null) return;
     this.userService.removeUser(id).subscribe({
       next: user => {
-        console.log('Usuario borrado: ', user);
-        this.userList.update(users =>
-          users.filter(user => user.id !== id)
-        );
+        this.userList.update(users => users.filter(u => u.id !== id));
+        this.cancelDelete();
+        this.showToast({ message: 'Usuario eliminado correctamente.', type: 'success' });
       },
-      error: err => {
-        console.log('No se ha podido borrar', err);
-        
-      }
-    })
+      error: () => {
+        this.cancelDelete();
+        this.showToast({ message: 'No se ha podido eliminar el usuario.', type: 'error' });
+      },
+    });
+  }
+
+  private showToast(toast: Toast): void {
+    if (this.toastTimer !== null) {
+      clearTimeout(this.toastTimer);
+    }
+    this.toast.set(toast);
+    this.toastTimer = setTimeout(() => {
+      this.toast.set(null);
+      this.toastTimer = null;
+    }, 3500);
   }
 
   getUsers(){

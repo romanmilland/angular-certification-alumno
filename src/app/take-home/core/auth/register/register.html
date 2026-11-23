@@ -42,13 +42,19 @@
           <option value="Admin">Administrador</option>
         </select>
       </label>
+
+      @if (registerForm.role().touched() && registerForm.role().invalid()) {
+        @for (error of registerForm.role().errors(); track error) {
+          <p class="form-error">{{ error.message }}</p>
+        }
+      }
     }
 
     <div class="button-row">
       @if (id() !== -1) {
-        <button type="submit" class="button">Actualizar</button>
+        <button type="submit" class="button" [disabled]="registerForm().invalid()">Actualizar</button>
       } @else {
-        <button type="submit" class="button">Añadir</button>
+        <button type="submit" class="button" [disabled]="registerForm().invalid()">Añadir</button>
       }
     </div>
 

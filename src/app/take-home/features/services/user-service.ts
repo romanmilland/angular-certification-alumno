@@ -62,28 +62,15 @@ export class UserService {
         return of(updateUser)
     }
 
-    removeUser(_id: number): Observable<User> {   
-        let userDeleted: User = {
-            id: -1,
-            name: '',
-            email: '',
-            role: 'Viewer'
-        }
-        this.usersState.update(users => 
-            users.filter(user => {
-                user.id !== _id
-                if(user.id === _id){
-                    userDeleted = user
-                }
-            })
-          
-        );
+    removeUser(_id: number): Observable<User> {
+        const userDeleted = this.usersState().find(u => u.id === _id);
 
-        if(userDeleted.id === -1) {
+        if (!userDeleted) {
             return throwError(() => new Error('User not found'));
         }
 
-        return of(userDeleted)
+        this.usersState.update(users => users.filter(u => u.id !== _id));
+        return of(userDeleted);
     }
 
     private loadUserStorage(): User | undefined {

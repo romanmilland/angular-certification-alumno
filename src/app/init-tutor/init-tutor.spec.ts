@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { InitTutor } from './init-tutor';
 
 describe('InitTutor', () => {
@@ -7,9 +9,9 @@ describe('InitTutor', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InitTutor]
-    })
-      .compileComponents();
+      imports: [InitTutor],
+      providers: [provideRouter([])],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(InitTutor);
     component = fixture.componentInstance;
