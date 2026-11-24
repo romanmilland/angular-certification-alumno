@@ -71,9 +71,7 @@ describe('ListUser', () => {
     });
 
     it('should remove the deleted user from userList', () => {
-      (userServiceMock.removeUser as ReturnType<typeof vi.fn>).mockReturnValue(
-        of(MOCK_USERS[0]),
-      );
+      vi.mocked(userServiceMock.removeUser!).mockReturnValue(of(MOCK_USERS[0]));
 
       component.openDeleteModal(1);
       component.confirmDelete();
@@ -86,9 +84,7 @@ describe('ListUser', () => {
     });
 
     it('should show a success toast after deleting a user', () => {
-      (userServiceMock.removeUser as ReturnType<typeof vi.fn>).mockReturnValue(
-        of(MOCK_USERS[0]),
-      );
+      vi.mocked(userServiceMock.removeUser!).mockReturnValue(of(MOCK_USERS[0]));
 
       component.openDeleteModal(1);
       component.confirmDelete();
@@ -99,9 +95,7 @@ describe('ListUser', () => {
     });
 
     it('should close the modal', () => {
-      (userServiceMock.removeUser as ReturnType<typeof vi.fn>).mockReturnValue(
-        throwError(() => new Error('delete failed')),
-      );
+      vi.mocked(userServiceMock.removeUser!).mockReturnValue(of(MOCK_USERS[0]));
 
       component.openDeleteModal(1);
       component.confirmDelete();
@@ -111,9 +105,7 @@ describe('ListUser', () => {
     });
 
     it('should show an error toast when removeUser fails', () => {
-      (userServiceMock.removeUser as ReturnType<typeof vi.fn>).mockReturnValue(
-        throwError(() => new Error('delete failed')),
-      );
+      vi.mocked(userServiceMock.removeUser!).mockReturnValue(throwError(() => new Error('error')));
 
       component.openDeleteModal(1);
       component.confirmDelete();

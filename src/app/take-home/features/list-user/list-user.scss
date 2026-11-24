@@ -90,30 +90,3 @@
 .modal__actions {
   justify-content: flex-end;
 }
-
-.toast {
-  position: fixed;
-  bottom: 40%;
-  right: 40%;
-  z-index: 1001;
-  gap: 10px;
-  padding: 14px 18px;
-  border-radius: 12px;
-  box-shadow: 0 8px 32px rgb(0 0 0 / 12%);
-  font-size: 0.95rem;
-  font-weight: 600;
-}
-
-.toast--success {
-  color: var(--success);
-  background: var(--success-soft);
-}
-
-.toast--error {
-  color: var(--danger);
-  background: var(--danger-soft);
-}
-
-.toast__message {
-  flex: 1;
-}
