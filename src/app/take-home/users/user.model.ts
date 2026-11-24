@@ -8,3 +8,5 @@ export interface User {
 }
 
 export type UserDraft = Omit<User, 'id'>;
+export type UserCredencials = Omit<User, 'id' | 'role'>;
+export type UserId = Pick<User, 'id'>;

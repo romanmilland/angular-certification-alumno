@@ -1,0 +1,24 @@
+<section class="page dashboard-page">
+  @if (!user()) {
+    <div class="page-header">
+      <h1>No se han podido cargar datos del usuario</h1>
+      <p class="lead">Inicia sesión de nuevo para continuar.</p>
+    </div>
+  } @else {
+    <header class="page-header dashboard-hero">
+      <span class="eyebrow">Panel de usuario</span>
+      <h1>Hola, {{ user()?.name }}</h1>
+      <p class="lead">Bienvenido a tu panel de gestión de usuarios.</p>
+      <div class="meta-row">
+        <span class="pill pill--success">{{ user()?.role }}</span>
+      </div>
+    </header>
+
+    <div class="button-row">
+      <a routerLink="/project/list" class="button show-user-button">Mostrar usuarios</a>
+      @if (user()?.role === 'Admin') {
+        <a routerLink="/project/auth/register" class="button button--secondary">Añadir usuario</a>
+      }
+    </div>
+  }
+</section>

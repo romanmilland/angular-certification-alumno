@@ -1,0 +1,65 @@
+<section class="page register-page">
+  <header class="page-header">
+    @if (id() !== -1) {
+      <span class="eyebrow">Editar usuario</span>
+      <h1>Actualizar usuario</h1>
+    } @else {
+      <span class="eyebrow">Nuevo usuario</span>
+      <h1>Registro</h1>
+    }
+    <p class="lead">Agrege los datos del nuevo usuario.</p>
+  </header>
+
+  <form (submit)="onSubmit($event)" class="card register-form">
+    <label class="form-field">
+      <span class="form-label">Nombre</span>
+      <input type="text" [formField]="registerForm.name" />
+    </label>
+
+    @if (registerForm.name().touched() && registerForm.name().invalid()) {
+      @for (error of registerForm.name().errors(); track error) {
+        <p class="form-error">{{ error.message }}</p>
+      }
+    }
+
+    <label class="form-field">
+      <span class="form-label">Correo</span>
+      <input type="email" [formField]="registerForm.email" />
+    </label>
+
+    @if (registerForm.email().touched() && registerForm.email().invalid()) {
+      @for (error of registerForm.email().errors(); track error) {
+        <p class="form-error">{{ error.message }}</p>
+      }
+    }
+
+    @if (userRole() === 'Admin') {
+      <label class="form-field">
+        <span class="form-label">Asignación</span>
+        <select [formField]="registerForm.role">
+          <option value="Viewer">Espectador</option>
+          <option value="Editor">Editor</option>
+          <option value="Admin">Administrador</option>
+        </select>
+      </label>
+
+      @if (registerForm.role().touched() && registerForm.role().invalid()) {
+        @for (error of registerForm.role().errors(); track error) {
+          <p class="form-error">{{ error.message }}</p>
+        }
+      }
+    }
+
+    <div class="button-row">
+      @if (id() !== -1) {
+        <button type="submit" class="button" [disabled]="registerForm().invalid()">Actualizar</button>
+      } @else {
+        <button type="submit" class="button" [disabled]="registerForm().invalid()">Añadir</button>
+      }
+    </div>
+
+    @if (notUser()) {
+      <p class="notice notice--warning">Usuario no encontrado</p>
+    }
+  </form>
+</section>

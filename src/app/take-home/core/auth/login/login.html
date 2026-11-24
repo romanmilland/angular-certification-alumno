@@ -1,0 +1,42 @@
+<section class="auth">
+  <div class="auth__card card">
+    <div class="auth__header">
+      <h1>Iniciar sesión</h1>
+      <p class="muted">Introduce tus datos para acceder al panel de gestión de usuarios.</p>
+    </div>
+
+    <form class="auth__form" (submit)="onSubmit($event)">
+      <label class="field">
+        <span class="field__label">Nombre</span>
+        <input class="field__input" type="text" placeholder="Tu nombre" [formField]="loginForm.name" />
+      </label>
+
+      @if(loginForm.name().touched() && loginForm.name().invalid()){
+        <div class="field__errors">
+          @for(error of loginForm.name().errors(); track error){
+            <p class="field__error">{{error.message}}</p>
+          }
+        </div>
+      }
+
+      <label class="field">
+        <span class="field__label">Correo</span>
+        <input class="field__input" type="email" placeholder="tu@correo.com" [formField]="loginForm.email" />
+      </label>
+
+      @if(loginForm.email().touched() && loginForm.email().invalid()){
+        <div class="field__errors">
+          @for(error of loginForm.email().errors(); track error){
+            <p class="field__error">{{error.message}}</p>
+          }
+        </div>
+      }
+
+      <button type="submit" class="button auth__submit">Acceder</button>
+
+      @if(notUser()){
+        <p class="notice notice--warning auth__notice">Usuario no encontrado</p>
+      }
+    </form>
+  </div>
+</section>

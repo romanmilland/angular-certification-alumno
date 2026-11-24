@@ -1,0 +1,38 @@
+:host {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
+  padding-inline: clamp(10px, 2vw, 16px);
+  padding-block: 32px 56px;
+  box-sizing: border-box;
+}
+
+.app-main > * {
+  max-width: 1180px;
+  margin-inline: auto;
+}
+
+@media (max-width: 1024px) {
+  .app-main {
+    padding-bottom: 44px;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-main {
+    padding-bottom: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-main {
+    padding-bottom: 28px;
+  }
+}
