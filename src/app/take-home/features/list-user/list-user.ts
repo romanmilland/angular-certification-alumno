@@ -2,14 +2,11 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { User, UserRole } from '../../users/user.model';
 import { UserService } from '../services/user-service';
-
-interface Toast {
-  message: string;
-  type: 'success' | 'error';
-}
+import { ToastComponent } from '../toast/toast';
+import { Toast } from '../toast/toast.model';
 
 @Component({
-  imports: [RouterLink],
+  imports: [RouterLink, ToastComponent],
   selector: 'app-list-user',
   styleUrl: './list-user.scss',
   templateUrl: './list-user.html',
@@ -17,7 +14,7 @@ interface Toast {
 export class ListUser implements OnInit {
 
   private readonly userService = inject(UserService);
-  private toastTimer: ReturnType<typeof setTimeout> | null = null;
+  private toastTimer: number | null = null;
 
   protected userRole = signal<UserRole>('Viewer');
   protected userList = signal<User[]>([]);
@@ -26,10 +23,7 @@ export class ListUser implements OnInit {
   protected toast = signal<Toast | null>(null);
 
   ngOnInit(): void {
-
     this.userRole.set(this.userService?.role() || 'Viewer')
-    console.log('role', this.userRole());
-    
     this.getUsers()
   }
 
@@ -47,7 +41,7 @@ export class ListUser implements OnInit {
     const id = this.userToDeleteId();
     if (id === null) return;
     this.userService.removeUser(id).subscribe({
-      next: user => {
+      next: () => {
         this.userList.update(users => users.filter(u => u.id !== id));
         this.cancelDelete();
         this.showToast({ message: 'Usuario eliminado correctamente.', type: 'success' });

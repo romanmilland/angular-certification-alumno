@@ -47,11 +47,7 @@
   }
 </section>
 
-@if (toast()) {
-  <div class="toast toast--{{ toast()!.type }}" role="alert">
-    <span class="toast__message">{{ toast()!.message }}</span>
-  </div>
-}
+<app-toast [toast]="toast()" />
 
 @if (showDeleteModal()) {
   <div class="modal-overlay" (click)="cancelDelete()">
