@@ -4,10 +4,12 @@ import { email, form, FormField, minLength, required } from '@angular/forms/sign
 import { ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs';
 import { UserService } from '../../../features/services/user-service';
+import { ToastComponent } from '../../../features/toast/toast';
+import { Toast } from '../../../features/toast/toast.model';
 import { User } from '../../../users/user.model';
 
 @Component({
-  imports: [FormField],
+  imports: [FormField, ToastComponent],
   selector: 'app-register',
   styleUrl: './register.scss',
   templateUrl: './register.html',
@@ -16,8 +18,10 @@ export class Register implements OnInit{
 
   private readonly userService = inject(UserService);
   private readonly route = inject(ActivatedRoute);
+  private toastTimer: number | null = null;
 
   private notUser = signal<boolean>(false)
+  protected toast = signal<Toast | null>(null);
 
   readonly id = toSignal(
     this.route.paramMap.pipe(
@@ -69,25 +73,35 @@ export class Register implements OnInit{
     
     if(this.id() === -1){
       this.userService.addUser(credencials).subscribe({
-        next: user => {
-          
-          console.log('Uusario creado');
-          console.log(user);
-          
+        next: () => {
+          this.showToast({ message: 'Usuario creado correctamente.', type: 'success' });
         },
-        error: err => {}
+        error: () => {
+          this.showToast({ message: 'No se ha podido crear el usuario.', type: 'error' });
+        }
       })
     }else{
       this.userService.updateUser(credencials).subscribe({
-        next: user => {
-          console.log('Usuario actualizado');
-          console.log(user);
-          
+        next: () => {
+          this.showToast({ message: 'Usuario actualizado correctamente.', type: 'success' });
         },
-        error: err => {}
+        error: () => {
+          this.showToast({ message: 'No se ha podido actualizar el usuario.', type: 'error' });
+        }
       })
     }
     
   };
+
+  private showToast(toast: Toast): void {
+    if (this.toastTimer !== null) {
+      clearTimeout(this.toastTimer);
+    }
+    this.toast.set(toast);
+    this.toastTimer = setTimeout(() => {
+      this.toast.set(null);
+      this.toastTimer = null;
+    }, 3500);
+  }
 
 }
